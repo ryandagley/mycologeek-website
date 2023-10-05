@@ -1,0 +1,33 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.11.5
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+
+      - name: Deploy to AWS Elastic Beanstalk
+        run: |
+          # Use AWS CLI to deploy to Elastic Beanstalk
+          aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws elasticbeanstalk create-application-version --application-name Mycologeek \
+          --version-label ${{ github.sha }} --source-bundle S3Bucket=mycologeek-deployment,S3Key=$GITHUB_SHA.zip
+          aws elasticbeanstalk update-environment --application-name your-application-name \
+          --environment-name Mycologeek-env --version-label ${{ github.sha }}
