@@ -29,5 +29,5 @@ jobs:
           aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws elasticbeanstalk create-application-version --application-name Mycologeek \
           --version-label ${{ github.sha }} --source-bundle S3Bucket=mycologeek-deployment,S3Key=$GITHUB_SHA.zip
-          aws elasticbeanstalk update-environment --application-name your-application-name \
+          aws elasticbeanstalk update-environment --application-name Mycologeek \
           --environment-name Mycologeek-env --version-label ${{ github.sha }}
