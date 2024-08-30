@@ -1,5 +1,6 @@
 from flask import Flask, render_template
 import json, random, requests
+from weather import get_current_temperature, get_api_key
 
 # define the app variable as Flask
 #app = Flask(__name__, template_folder="templates")
@@ -38,7 +39,11 @@ def gallery():
 
 @app.route('/monitor.html')
 def monitor():
-    return render_template('monitor.html')
+    city_name = 'Tacoma'  
+    secret_name = 'weatherAPIKey'
+    api_key = get_api_key(secret_name)
+    temperature = get_current_temperature(city_name, api_key)
+    return render_template('monitor.html', temperature=temperature, city=city_name)
 
 
 @app.route('/pipe/', methods=["GET", "POST"])
