@@ -22,12 +22,24 @@ jobs:
         run: |
           pip install -r requirements.txt
 
+      - name: Zip the application
+        run: |
+          zip -r application.zip .
+
       - name: Deploy to AWS Elastic Beanstalk
         run: |
-          # Use AWS CLI to deploy to Elastic Beanstalk
+          # Configure AWS CLI
           aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws configure set default.region us-west-2
+          
+          # Upload the zip file to S3
+          aws s3 cp application.zip s3://elasticbeanstalk-us-west-2-238686207997/$GITHUB_SHA.zip
+          
+          # Create a new application version
           aws elasticbeanstalk create-application-version --application-name Mycologeek \
-          --version-label ${{ github.sha }} --source-bundle S3Bucket=elasticbeanstalk-us-west-2-238686207997,S3Key=$GITHUB_SHA.zip
+            --version-label ${{ github.sha }} --source-bundle S3Bucket=elasticbeanstalk-us-west-2-238686207997,S3Key=$GITHUB_SHA.zip
+          
+          # Update the Elastic Beanstalk environment
           aws elasticbeanstalk update-environment --application-name Mycologeek \
-          --environment-name Mycologeek-env --version-label ${{ github.sha }}
+            --environment-name Mycologeek-env --version-label ${{ github.sha }}
