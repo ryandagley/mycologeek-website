@@ -1,9 +1,13 @@
 import requests
 import boto3
 import json
+import logging
+
+logging.basicConfig(level=logging.INFO)
 
 
 def get_api_key(secret_name, region_name="us-west-2"):
+    logging.info(f"Fetching weather data for {city_name}")
     client = boto3.client("secretsmanager", region_name=region_name)
 
     try:
@@ -28,6 +32,7 @@ def get_current_temperature(city_name, api_key):
     if response.status_code == 200:
         data = response.json()
         temperature = data['main']['temp']
+        logging.info(f"Retrieved temperature: {temperature}")
         return temperature
     else:
         return None
