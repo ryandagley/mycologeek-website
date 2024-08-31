@@ -19,7 +19,7 @@ def get_api_key(secret_name, region_name="us-west-2"):
         logging.error(f"Error retrieving secret: {e}")
         return None
 
-def get_current_temperature(city_name, api_key):
+def get_weather_data(city_name, api_key):
     logging.info(f"Fetching weather data for {city_name}")
     base_url = 'http://api.openweathermap.org/data/2.5/weather'
     params = {
@@ -29,11 +29,22 @@ def get_current_temperature(city_name, api_key):
     }
     try:
         response = requests.get(base_url, params=params)
-        response.raise_for_status()  # HTTPError for bad responses
-        data = response.json()
-        temperature = data['main']['temp']
-        logging.info(f"Retrieved temperature: {temperature}°F")
-        return temperature
+        if response.status_code == 200:
+            data = response.json()
+            weather_info = {
+                "temperature": data['main']['temp'],
+                "humidity": data['main']['humidity'],
+                "pressure": data['main']['pressure'],
+                "temp_max": data['main']['temp_max'],
+                "temp_min": data['main']['temp_min'],
+                "wind_speed": data['wind']['speed'],
+                "wind_direction": data['wind']['deg'],
+                "cloudiness": data['clouds']['all'],
+                "sunrise": data['sys']['sunrise'],
+                "sunset": data['sys']['sunset'],
+                "description": data['weather'][0]['description']
+        }
+        return weather_info
     except requests.exceptions.RequestException as e:
         logging.error(f"API call failed: {e}")
         return None

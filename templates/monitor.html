@@ -131,8 +131,13 @@
     <section>
               <h3 class="heading-inner">Weather Report</h3>
                 <!-- Weather Section -->
-                <h4>Current Weather in {{ city }}</h4>
-                <p>The current temperature is {{ temperature }}°F</p>
+                <h4>Current weather at Artemis Lab in {{ city }}</h4>
+                <ul>
+                    <li><strong>Temperature:</strong> {{ temperature.temperature }}°F</li>
+                    <li><strong>Humidity:</strong> {{ temperature.humidity }}%</li>
+                    <li><strong>Today's High/Low: </strong> {{ temperature.temp_max }} °F/ {{temperature.temp_min}} °F</li>
+                </ul>
+                
     </section>
 <h3 class="heading-inner">Artemis Lab Monitor</h3>
 
