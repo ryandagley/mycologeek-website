@@ -11,7 +11,7 @@
         <link rel="shortcut icon" type="image/png" href="static/img/favicon.png">
 
         <!-- Boostrap Core CSS-->
-        <link rel="stylesheet" href="static/css/bootstrap.min.css">
+        <link rel="stylesheet" href="static/css/bootstrap.min.css"> 
 
         <!-- Main CSS -->
         <link rel="stylesheet" href="static/css/style.css">
@@ -131,12 +131,17 @@
     <section>
               <h3 class="heading-inner">Weather Report</h3>
                 <!-- Weather Section -->
+                <div class="weather-card">  
+                    <div class="weather-text">
                 <h4>Current weather at Artemis Lab in {{ city }}</h4>
+
                 <ul>
                     <li><strong>Temperature:</strong> {{ temperature.temperature }}°F</li>
                     <li><strong>Humidity:</strong> {{ temperature.humidity }}%</li>
                     <li><strong>Today's High/Low: </strong> {{ temperature.temp_max }} °F/ {{temperature.temp_min}} °F</li>
                 </ul>
+                </div>
+            </div>
                 
     </section>
 <h3 class="heading-inner">Artemis Lab Monitor</h3>
