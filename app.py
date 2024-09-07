@@ -45,7 +45,7 @@ def faq():
 def gallery():
     return render_template('gallery.html')
 
-
+'''
 @app.route('/monitor.html')
 def monitor():
     city_name = 'Tacoma'
@@ -53,6 +53,38 @@ def monitor():
     api_key = get_api_key(secret_name)
     temperature = get_weather_data(city_name, api_key)
     return render_template('monitor.html', temperature=temperature, city=city_name)
+'''
+
+@app.route('/monitor.html')
+def monitor():
+    city_name = 'Tacoma'
+    secret_name = 'weatherAPIKey'
+    api_key = get_api_key(secret_name)
+    temperature = get_weather_data(city_name, api_key)
+
+    # choose background image based on weather description
+    weather_condition = temperature['main'].lower()
+
+    if "clear" in weather_condition:
+        background_image = '../img/clear_sky.png'
+    
+    elif "rainy" in weather_condition:
+        background_image = '../img/rainy_day.png'
+
+    elif "thunderstorm" in weather_condition:
+        background_image = '../img/rainy_day.png'
+
+    elif "drizzle" in weather_condition:
+        background_image = '../img/rainy_day.png'
+
+    elif "snow" in weather_condition:
+        background_image = '../img/snow_day.png'
+
+    else:
+        background_image = '../img/mushroom_bg.png'
+
+     # Pass the background image to the template
+    return render_template('monitor.html', temperature=temperature, city=city_name, background_image=background_image)
 
 
 @app.route('/pipe/', methods=["GET", "POST"])

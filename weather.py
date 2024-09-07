@@ -33,6 +33,7 @@ def get_weather_data(city_name, api_key):
             data = response.json()
             weather_info = {
                 "temperature": data['main']['temp'],
+                "main": data['weather'][0]['main'],
                 "humidity": data['main']['humidity'],
                 "pressure": data['main']['pressure'],
                 "temp_max": data['main']['temp_max'],
