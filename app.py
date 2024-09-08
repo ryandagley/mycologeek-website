@@ -2,7 +2,7 @@ from flask import Flask, render_template
 import json
 import random
 import requests
-from weather import get_weather_data, get_api_key
+from weather import get_weather_data, get_api_key, get_weather_history, get_secrets
 
 # define the app variable as Flask
 # app = Flask(__name__, template_folder="templates")
@@ -62,6 +62,20 @@ def monitor():
     api_key = get_api_key(secret_name)
     temperature = get_weather_data(city_name, api_key)
 
+    # Fetch historical weather data from S3
+    s3_access_name = "cred-keys"
+    secret = get_secrets(s3_access_name)
+
+    bucket_name = "mycologeek"
+    file_name = "weather/2024-09-07-weather.json"
+
+    if secret:
+        access_key = secret.get('access_key')
+        secret_key = secret.get('secret_key')
+        historical_weather = get_weather_history(bucket_name, file_name, access_key, secret_key)
+    else:
+        historical_weather = None
+
     # choose background image based on weather description
     weather_condition = temperature['main'].lower()
 
@@ -84,7 +98,7 @@ def monitor():
         background_image = '../img/mushroom_bg.png'
 
      # Pass the background image to the template
-    return render_template('monitor.html', temperature=temperature, city=city_name, background_image=background_image)
+    return render_template('monitor.html', temperature=temperature, city=city_name, background_image=background_image, historical_weather=historical_weather)
 
 
 @app.route('/pipe/', methods=["GET", "POST"])

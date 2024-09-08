@@ -145,6 +145,45 @@
             </div>
                 
     </section>
+
+
+
+    <!-- Add a section to show historical weather data from S3 -->
+    <section>
+        <h3 class="heading-inner">Historical Weather Data</h3>
+        <div class="weather-history">
+            {% if historical_weather %}
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>City</th>
+                            <th>Temperature (°F)</th>
+                            <th>Humidity (%)</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for entry in historical_weather %}
+                            <tr>
+                                <td>{{ entry.date }}</td>
+                                <td>{{ entry.city }}</td>
+                                <td>{{ entry.temperature }}</td>
+                                <td>{{ entry.humidity }}</td>
+                                <td>{{ entry.description }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <p>No historical data available</p>
+            {% endif %}
+        </div>
+    </section>
+
+
+
+
 <h3 class="heading-inner">Artemis Lab Monitor</h3>
 
 
