@@ -23,49 +23,18 @@
         <link href='https://fonts.googleapis.com/css?family=Oxygen:400,300' rel='stylesheet' type='text/css'>
         <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Qwigley" />
         <link href="https://fonts.googleapis.com/css2?family=Life+Savers:wght@400;700&display=swap" rel="stylesheet">
+        
         <!-- Font awesome -->
         <link href="static/font-awesome-4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
-        <!-- Charlist-->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/chartist.js/latest/chartist.min.css">
-    <script src="https://cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>
 
-    <!-- Bootstraps Java Scipts Links -->
-    <!--link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"-->
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-
-        <!-- JQuery links  -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-
-        <!--Added -->
-    <link rel="stylesheet" type="text/css" href="https://code.highcharts.com/css/stocktools/gui.css">
-    <link rel="stylesheet" type="text/css" href="https://code.highcharts.com/css/annotations/popup.css">
-
-    <script src="https://code.highcharts.com/stock/highstock.js"></script>
-    <script src="https://code.highcharts.com/stock/modules/data.js"></script>
-
-    <script src="https://code.highcharts.com/stock/indicators/indicators-all.js"></script>
-
-    <script src="https://code.highcharts.com/stock/modules/drag-panes.js"></script>
-    <script src="https://code.highcharts.com/stock/modules/annotations-advanced.js"></script>
-    <script src="https://code.highcharts.com/stock/modules/price-indicator.js"></script>
-    <script src="https://code.highcharts.com/stock/modules/full-screen.js"></script>
-
-    <script src="https://code.highcharts.com/stock/modules/stock-tools.js"></script>
 
    </head>
    <body>
 
    <!-- Start wrapper -->
    <div class="wrapper">
-  	  <div class="col-md-12">
-         <!-- Logo -->
-         <!--
-         <div class="brand wow fadeIn" data-wow-delay="0.1s"> Ryan Dagley
-           <div class="title"> - Mycologeek -  </div>
-         </div> -->
+  	  <div class="col-md-12">  
 
          <!-- Navigation -->
          <nav class="navbar navbar-default" role="navigation">
@@ -78,10 +47,7 @@
                     <span class="icon-bar"></span>
                 </button>
                 <!-- navbar-brand is hidden on larger screens, but visible when the menu is collapsed -->
-                <!--
-                <div class="navbar-brand"><a href="">Ryan Dagley</a>
-                <div class="title"> - Mycologeek - </div>
-                </div> -->
+               
 
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -120,11 +86,6 @@
          </nav>
          <!-- End nav -->
 
-
-         <!-- Start Services -->
-         <!--div class="margin-services"-->
-             <!--div class="col-md-7"-->
-               <!-- in this div -->
 
 
 <body>
@@ -183,106 +144,18 @@
 
 
 
-
+<!--
 <h3 class="heading-inner">Artemis Lab Monitor</h3>
 
 
 <div class="jumbotron">
     <div id="container" class="chart">
-
-<script>
-    var temperature = []
-    var moisture = []
-    var light = []
-
-    function processData(data)
-    {
-        var data = data.res;
-        for (var i=0; i < data.length; i++)
-        {
-            temperature.push([
-                data[i][0], // the date
-                data[i][1] // the temperature
-            ]);
-            moisture.push([
-                data[i][0], // the date
-                data[i][2] // the moisture
-            ]);
-            light.push([
-                data[i][0], // the date
-                data[i][3] // the light
-            ]);
-        }
-    }
+        
 
 
-    function plotCharts(){
-        Highcharts.stockChart('container', {
-            navigation: {
-                bindings: {
-                    rect: {
-                        annotationsOptions: {
-                            shapeOptions: {
-                                fill: 'rgba(255, 0, 0, 0.8)'
-                            }
-                        }
-                    }
-                },
-                annotationsOptions: {
-                    typeOptions: {
-                        line: {
-                            stroke: 'rgba(255, 0, 0, 1)',
-                            strokeWidth: 10
-                        }
-                    }
-                }
-            },
-            yAxis: [{
-                labels: {
-                    align: 'left'
-                },
-                height: '80%'
-            }, {
-                labels: {
-                    align: 'left'
-                },
-                top: '80%',
-                height: '20%',
-                offset: 0
-            }],
-            series: [{
-                type: 'line',
-                id: 'T1',
-                name: 'Artemis Lab Temperature Sensor #x',
-                data: temperature
-            }, {
-                type: 'line',
-                id: 'M1',
-                name: 'Artemis Lab Moisture Sensor #1',
-                data: moisture
-            }, {
-                type: 'line',
-                id: 'L1',
-                name: 'Artemis Lab Light Sensor #1',
-                data: light
-            }]
-        });
-
-
-    }
-
-    $( document ).ready(function()
-    {
-        $.getJSON('/pipe.json', function(data){
-            processData(data);
-            plotCharts();
-        });
-    });
-
-</script>
 </div>
 </div>
-
+-->
 
 </body>
 
@@ -313,10 +186,7 @@
    <!-- End wrapper -->
 
       
-   <!-- jQuery Version 1.11.0 -->
-   <script src="static/js/jquery-1.11.0.js"></script>
-   <!-- Boostrap JS -->
-   <script src="static/js/bootstrap.min.js"></script>
+
    <!-- Smooth scroll JS -->
    <script src="static/js/smoothscroll.js"></script>
    

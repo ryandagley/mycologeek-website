@@ -1,6 +1,4 @@
 from flask import Flask, render_template
-import json
-import random
 import requests
 from weather import get_weather_data, get_api_key, get_weather_history, get_secrets
 
@@ -45,15 +43,6 @@ def faq():
 def gallery():
     return render_template('gallery.html')
 
-'''
-@app.route('/monitor.html')
-def monitor():
-    city_name = 'Tacoma'
-    secret_name = 'weatherAPIKey'
-    api_key = get_api_key(secret_name)
-    temperature = get_weather_data(city_name, api_key)
-    return render_template('monitor.html', temperature=temperature, city=city_name)
-'''
 
 @app.route('/monitor.html')
 def monitor():
