@@ -1,6 +1,6 @@
 from flask import Flask, render_template
 import requests
-from weather import get_weather_data, get_api_key, get_weather_history, get_secrets
+from weather import get_weather_data, get_api_key, get_weather_history, get_secrets, get_last_10_days_weather
 
 # define the app variable as Flask
 # app = Flask(__name__, template_folder="templates")
@@ -56,12 +56,13 @@ def monitor():
     secret = get_secrets(s3_access_name)
 
     bucket_name = "mycologeek"
-    file_name = "weather/2024-09-07-weather.json"
 
     if secret:
         access_key = secret.get('access_key')
         secret_key = secret.get('secret_key')
-        historical_weather = get_weather_history(bucket_name, file_name, access_key, secret_key)
+        
+        # Fetch the last 10 days of weather history
+        historical_weather = get_last_10_days_weather(bucket_name, access_key, secret_key)
     else:
         historical_weather = None
 
@@ -86,9 +87,8 @@ def monitor():
     else:
         background_image = '../img/mushroom_bg.png'
 
-     # Pass the background image to the template
+    # Pass the background image and historical weather data to the template
     return render_template('monitor.html', temperature=temperature, city=city_name, background_image=background_image, historical_weather=historical_weather)
-
 
 @app.route('/pipe/', methods=["GET", "POST"])
 def pipe():
