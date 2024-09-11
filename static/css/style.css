@@ -1204,7 +1204,7 @@ h6 span {
 
 .weather-text {
   position: relative;
-  background-color: rgba(255, 255, 255, 0.25); /* Semi-transparent white background */
+  background-color: rgba(255, 255, 255, 0.85); /* Semi-transparent white background */
   border-radius: 10px; /* Rounded corners for text container */
   top: 20px;
   //bottom: 10px;
