@@ -2,12 +2,13 @@ from flask import Flask, render_template
 import requests
 from weather import get_weather_data, get_api_key, get_weather_history, get_secrets, get_last_10_days_weather, get_sensor_data
 from datetime import datetime
+import pytz
 
-
-# define the app variable as Flask
-# app = Flask(__name__, template_folder="templates")
+# Define the app variable as Flask
 app = Flask(__name__)
 
+# Pacific Time Zone (Tacoma)
+pacific_tz = pytz.timezone('US/Pacific')
 
 # Routes to the templates
 @app.route('/')
@@ -58,8 +59,12 @@ def monitor():
     secret = get_secrets(s3_access_name)
 
     bucket_name = "mycologeek"
-    # Fetch today's sensor file
-    sensor_file_name = f"sensors/{datetime.now().strftime('%Y-%m-%d')}-sensor-data.json"
+    
+    # Get the current date in Pacific Time Zone
+    pacific_time = datetime.now(pacific_tz)
+    
+    # Fetch today's sensor file based on Pacific Time
+    sensor_file_name = f"sensors/{pacific_time.strftime('%Y-%m-%d')}-sensor-data.json"
 
     if secret:
         access_key = secret.get('access_key')
@@ -76,7 +81,7 @@ def monitor():
         historical_weather = None
         sensor_data = None
 
-    # choose background image based on weather description
+    # Choose background image based on weather description
     weather_condition = temperature['main'].lower()
 
     if "clear" in weather_condition:
