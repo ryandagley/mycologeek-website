@@ -146,6 +146,22 @@ def get_last_10_days_weather(bucket_name, access_key, secret_key):
         logging.error("No weather data available.")
         return []
 
+# Fetch sensor data from S3
+def get_sensor_data(bucket_name, file_name, access_key, secret_key):
+    logging.info(f"Attempting to fetch sensor data from file {file_name} in bucket {bucket_name}")
+    s3 = boto3.resource('s3', aws_access_key_id=access_key, aws_secret_access_key=secret_key)
+    try:
+        content_object = s3.Object(bucket_name, file_name)
+        file_content = content_object.get()['Body'].read().decode('utf-8')
+        logging.info(f"Successfully fetched sensor data from {file_name}")
+        sensor_data = json.loads(file_content)
+        
+        # Return the last 20 sensor readings
+        return sensor_data[-20:]
+    except Exception as e:
+        logging.error(f"Failed to fetch sensor data from {file_name}: {e}")
+        return None
+
 
 if __name__ == "__main__":
     # Example usage

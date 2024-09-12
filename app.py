@@ -1,6 +1,8 @@
 from flask import Flask, render_template
 import requests
-from weather import get_weather_data, get_api_key, get_weather_history, get_secrets, get_last_10_days_weather
+from weather import get_weather_data, get_api_key, get_weather_history, get_secrets, get_last_10_days_weather, get_sensor_data
+from datetime import datetime
+
 
 # define the app variable as Flask
 # app = Flask(__name__, template_folder="templates")
@@ -56,39 +58,43 @@ def monitor():
     secret = get_secrets(s3_access_name)
 
     bucket_name = "mycologeek"
+    # Fetch today's sensor file
+    sensor_file_name = f"sensors/{datetime.now().strftime('%Y-%m-%d')}-sensor-data.json"
 
     if secret:
         access_key = secret.get('access_key')
         secret_key = secret.get('secret_key')
-        
+
         # Fetch the last 10 days of weather history
-        historical_weather = get_last_10_days_weather(bucket_name, access_key, secret_key)
+        historical_weather = get_last_10_days_weather(
+            bucket_name, access_key, secret_key)
+
+        # Fetch the most recent 20 sensor readings
+        sensor_data = get_sensor_data(
+            bucket_name, sensor_file_name, access_key, secret_key)
     else:
         historical_weather = None
+        sensor_data = None
 
     # choose background image based on weather description
     weather_condition = temperature['main'].lower()
 
     if "clear" in weather_condition:
         background_image = '../img/clear_sky.png'
-    
     elif "rainy" in weather_condition:
         background_image = '../img/rainy_day.png'
-
     elif "thunderstorm" in weather_condition:
         background_image = '../img/rainy_day.png'
-
     elif "drizzle" in weather_condition:
         background_image = '../img/rainy_day.png'
-
     elif "snow" in weather_condition:
         background_image = '../img/snow_day.png'
-
     else:
         background_image = '../img/mushroom_bg.png'
 
-    # Pass the background image and historical weather data to the template
-    return render_template('monitor.html', temperature=temperature, city=city_name, background_image=background_image, historical_weather=historical_weather)
+    # Pass the background image, historical weather, and sensor data to the template
+    return render_template('monitor.html', temperature=temperature, city=city_name, background_image=background_image, historical_weather=historical_weather, sensor_data=sensor_data)
+
 
 @app.route('/pipe/', methods=["GET", "POST"])
 def pipe():

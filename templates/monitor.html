@@ -130,6 +130,35 @@
                 </div>
             </section>
 
+            <section>
+                <h3 class="heading-inner">Sensor Data</h3>
+                <div class="sensor-data">
+                    {% if sensor_data %}
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Timestamp</th>
+                                <th>Sensor 0 Temperature (°F)</th>
+                                <th>Sensor 1 Temperature (°F)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for reading in sensor_data %}
+                            <tr>
+                                <td>{{ reading.timestamp }}</td>
+                                <td>{{ reading.sensor_0_temperature_F }}</td>
+                                <td>{{ reading.sensor_1_temperature_F }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    {% else %}
+                    <p>No sensor data available</p>
+                    {% endif %}
+                </div>
+            </section>
+            
+
             <center>
                 <p>Keep up the great work, robots!</p>
             </center>
