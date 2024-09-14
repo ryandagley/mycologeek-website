@@ -930,6 +930,7 @@ h6 span {
   border-bottom: 1px solid #dddddd;
   margin-top: 54px;
   margin-bottom: 72px;
+  width: 50%;
 }
 
 .footer h5 {
@@ -1199,12 +1200,16 @@ h6 span {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-
 }
 
 .weather-text {
   position: relative;
-  background-color: rgba(255, 255, 255, 0.85); /* Semi-transparent white background */
+  background-color: rgba(
+    255,
+    255,
+    255,
+    0.85
+  ); /* Semi-transparent white background */
   border-radius: 10px; /* Rounded corners for text container */
   top: 20px;
   //bottom: 10px;
@@ -1223,7 +1228,12 @@ h6 span {
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.4); /* Optional dark overlay for better contrast */
+  background: rgba(
+    0,
+    0,
+    0,
+    0.4
+  ); /* Optional dark overlay for better contrast */
   border-radius: 15px;
   z-index: 0; /* Keep it behind the text */
 }
