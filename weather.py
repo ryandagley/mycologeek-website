@@ -12,7 +12,6 @@ logging.basicConfig(
 
 # Fetch API Key from AWS Secrets Manager
 def get_api_key(secret_name, region_name="us-west-2"):
-    logging.info(f"Fetching API key from Secrets Manager with secret name: {secret_name}")
     client = boto3.client("secretsmanager", region_name=region_name)
     try:
         get_secret_value_response = client.get_secret_value(SecretId=secret_name)
@@ -67,7 +66,6 @@ def get_secrets(secret_name, region_name="us-west-2"):
         secret_dict = json.loads(secret)
         return secret_dict
     except Exception as e:
-        logging.error(f"Error retrieving secret: {e}")
         return None
 
 # List weather files from the S3 bucket and fetch the latest 10
@@ -80,8 +78,6 @@ def list_weather_files(bucket_name, s3_client):
             weather_files = response['Contents']
             file_dates = []
             
-            # Log each file found
-            logging.info(f"Files found in bucket: {[file['Key'] for file in weather_files]}")
 
             for file in weather_files:
                 key = file['Key']
