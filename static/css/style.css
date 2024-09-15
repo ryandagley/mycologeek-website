@@ -946,6 +946,16 @@ h6 span {
   margin-left: 12px;
 }
 
+#links_year {
+  text-align: center;
+}
+
+#links_year a {
+  display: inline-block; 
+  margin: 0 10px; 
+  text-decoration: none;
+}
+
 /* ----------------------------------------------------
 	 Responsive styles
 ------------------------------------------------------- */
