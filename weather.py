@@ -174,7 +174,15 @@ def get_sensor_data(bucket_name, file_name, access_key, secret_key):
         logging.info(f"Successfully fetched sensor data from {file_name}")
         sensor_data = json.loads(file_content)
 
+        filtered_sensor_data = []
+
         for record in sensor_data[-20:]:
+            sensor_0_temperature_F = record.get('sensor_0_temperature_F')
+            sensor_1_temperature_F = record.get('sensor_1_temperature_F')
+            
+            # Null handling if neither sensor has data.
+            if sensor_0_temperature_F is None and sensor_1_temperature_F is None:
+                continue
             if 'sensor_0_temperature_F' in record:
                 record['sensor_0_temperature_F'] = "{:.2f}".format(
                     float(record['sensor_0_temperature_F']))
@@ -182,8 +190,9 @@ def get_sensor_data(bucket_name, file_name, access_key, secret_key):
                 record['sensor_1_temperature_F'] = "{:.2f}".format(
                     float(record['sensor_1_temperature_F']))
 
-        # Return the last 20 sensor readings
-        return sensor_data[-20:]
+            filtered_sensor_data.append(record)
+
+        return filtered_sensor_data
 
     except Exception as e:
         logging.error(f"Failed to fetch sensor data from {file_name}: {e}")
