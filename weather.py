@@ -5,7 +5,7 @@ import logging
 from datetime import datetime
 
 logging.basicConfig(
-    level=logging.DEBUG,  # Set to DEBUG to capture all logs
+    level=logging.INFO,  # Set to DEBUG to capture all logs
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
     handlers=[logging.StreamHandler()]
 )
