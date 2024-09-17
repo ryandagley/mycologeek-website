@@ -1,7 +1,9 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, abort
+import os
 import requests
 from weather import get_weather_data, get_api_key, get_weather_history, get_secrets, get_last_10_days_weather, get_sensor_data
 from datetime import datetime
+import markdown
 import pytz
 
 # Define the app variable as Flask
@@ -114,6 +116,24 @@ def pipe():
 @app.route('/technical.html')
 def technical():
     return render_template('technical.html')
+
+@app.route('/articles/<name>')
+def article(name):
+    # Path to the Markdown file within the static folder
+    filepath = os.path.join(app.static_folder, 'articles', f'{name}.md')
+
+    # Check if the file exists
+    if not os.path.exists(filepath):
+        abort(404)  # If the file does not exist, return a 404 page
+
+    with open(filepath, 'r', encoding='utf-8') as f:
+        md_content = f.read()
+
+    # Convert Markdown to HTML
+    html_content = markdown.markdown(md_content)
+
+    return render_template('article.html', content=html_content, title=name)
+
 
 
 if __name__ == '__main__':
