@@ -777,7 +777,7 @@ figure.effect-moses:hover img {
   font-size: 1.1em;
   padding: 0 0.25em;
   background: white;
-  font-family: 'Qwigley', Helvetica, Sans-serif;
+  font-family: Helvetica, Sans-serif;
 }
 
 /* ----------------------------------------------------
@@ -951,8 +951,8 @@ h6 span {
 }
 
 #links_year a {
-  display: inline-block; 
-  margin: 0 10px; 
+  display: inline-block;
+  margin: 0 10px;
   text-decoration: none;
 }
 
@@ -1004,6 +1004,13 @@ h6 span {
     right: 27px;
     z-index: 1;
   }
+
+  .special-elite-regular {
+    font-family: "Special Elite", system-ui;
+    font-weight: 400;
+    font-style: normal;
+  }
+  
 
   .grid figure p {
     letter-spacing: 1px;
