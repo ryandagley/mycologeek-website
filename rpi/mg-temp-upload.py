@@ -66,37 +66,33 @@ def celsius_to_fahrenheit(celsius):
 
 # Collect sensor data and save locally and in S3
 def collect_and_save_data():
-    while True:
-        sensor_data = {}
+    sensor_data = {}
 
-        # Collect data from all the connected Arduinos
-        for idx, ser in enumerate(serial_connections):
-            if ser.in_waiting > 0:
-                line = ser.readline().decode('utf-8').strip()
-                print(f"Sensor {idx}: {line}")
+    # Collect data from all the connected Arduinos
+    for idx, ser in enumerate(serial_connections):
+        if ser.in_waiting > 0:
+            line = ser.readline().decode('utf-8').strip()
+            print(f"Sensor {idx}: {line}")
 
-                # Assuming sensor data contains temperature in Celsius, convert to Fahrenheit
-                if "temperature" in line.lower():
-                    celsius_value = float(line.split()[-1])  # Assuming the temperature is the last value in the line
-                    fahrenheit_value = celsius_to_fahrenheit(celsius_value)
-                    sensor_data[f'sensor_{idx}_temperature_F'] = fahrenheit_value
-                else:
-                    sensor_data[f'sensor_{idx}'] = line
+            # Assuming sensor data contains temperature in Celsius, convert to Fahrenheit
+            if "temperature" in line.lower():
+                celsius_value = float(line.split()[-1])  # Assuming the temperature is the last value in the line
+                fahrenheit_value = celsius_to_fahrenheit(celsius_value)
+                sensor_data[f'sensor_{idx}_temperature_F'] = fahrenheit_value
+            else:
+                sensor_data[f'sensor_{idx}'] = line
 
-        # Add a timestamp to the data
-        sensor_data['timestamp'] = time.strftime("%Y-%m-%d %H:%M:%S")
+    # Add a timestamp to the data
+    sensor_data['timestamp'] = time.strftime("%Y-%m-%d %H:%M:%S")
 
-        # Get the file paths for today
-        local_file_path, s3_file_path = get_file_paths()
+    # Get the file paths for today
+    local_file_path, s3_file_path = get_file_paths()
 
-        # Write data to local file
-        write_data_to_local_file(sensor_data, local_file_path)
+    # Write data to local file
+    write_data_to_local_file(sensor_data, local_file_path)
 
-        # Append data to the S3 file for today
-        append_data_to_s3(sensor_data, s3_file_path)
-
-        # Sleep for 15 minutes before collecting the next set of data
-        time.sleep(30)  # 900 seconds = 15 minutes
+    # Append data to the S3 file for today
+    append_data_to_s3(sensor_data, s3_file_path)
 
 if __name__ == "__main__":
     collect_and_save_data()
