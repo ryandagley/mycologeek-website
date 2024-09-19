@@ -49,7 +49,7 @@ p {
 }
 
 h1 {
-  font-family: 'Qwigley', Helvetica, Sans-serif;
+  font-family: Helvetica, Sans-serif;
   font-size: 2.2em;
   font-weight: 600;
   color: #4f4d47;
@@ -143,7 +143,7 @@ p {
 .navbar-default .navbar-brand {
   padding: 10px 12px 14px;
   text-align: center;
-  font-family: 'Qwigley', Helvetica, Sans-serif;
+  font-family:  Helvetica, Sans-serif;
   font-size: 2.4em;
   line-height: normal;
   color: #4f4d47;
@@ -189,7 +189,7 @@ p {
     margin: 0;
     padding: 30px 0 14px;
     text-align: center;
-    font-family: 'Qwigley', Helvetica, Sans-serif;
+    font-family:  Helvetica, Sans-serif;
     font-size: 4.1em;
     line-height: normal;
     color: #4f4d47;

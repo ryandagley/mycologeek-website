@@ -65,6 +65,9 @@ def monitor():
     # Get the current date in Pacific Time Zone
     pacific_time = datetime.now(pacific_tz)
     
+    
+
+
     # Fetch today's sensor file based on Pacific Time
     sensor_file_name = f"sensors/{pacific_time.strftime('%Y-%m-%d')}-sensor-data.json"
 
