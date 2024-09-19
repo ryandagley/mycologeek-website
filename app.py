@@ -6,6 +6,7 @@ from datetime import datetime
 import markdown
 import pytz
 
+
 # Define the app variable as Flask
 app = Flask(__name__)
 
@@ -65,9 +66,6 @@ def monitor():
     # Get the current date in Pacific Time Zone
     pacific_time = datetime.now(pacific_tz)
     
-    
-
-
     # Fetch today's sensor file based on Pacific Time
     sensor_file_name = f"sensors/{pacific_time.strftime('%Y-%m-%d')}-sensor-data.json"
 
@@ -104,16 +102,6 @@ def monitor():
 
     # Pass the background image, historical weather, and sensor data to the template
     return render_template('monitor.html', temperature=temperature, city=city_name, background_image=background_image, historical_weather=historical_weather, sensor_data=sensor_data)
-
-
-@app.route('/pipe/', methods=["GET", "POST"])
-def pipe():
-    payload = {}
-    headers = {}
-    url = "https://s3-us-west-2.amazonaws.com/mycologeek.com/sensor_data.json"
-    r = requests.get(url, headers=headers, data={})
-    r = r.json()
-    return {"res": r}
 
 
 @app.route('/technical.html')
