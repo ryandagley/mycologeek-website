@@ -165,13 +165,13 @@ def get_last_10_days_weather(bucket_name, access_key, secret_key):
 
 def get_sensor_data(bucket_name, file_name, access_key, secret_key):
     logging.info(
-        f"Attempting to fetch sensor data from file {file_name} in bucket {bucket_name}")
+        f"Attempting to fetch sensor data from file.")
     s3 = boto3.resource('s3', aws_access_key_id=access_key,
                         aws_secret_access_key=secret_key)
     try:
         content_object = s3.Object(bucket_name, file_name)
         file_content = content_object.get()['Body'].read().decode('utf-8')
-        logging.info(f"Successfully fetched sensor data from {file_name}")
+        logging.info(f"Successfully fetched sensor data from file")
         sensor_data = json.loads(file_content)
 
         filtered_sensor_data = []
@@ -195,7 +195,7 @@ def get_sensor_data(bucket_name, file_name, access_key, secret_key):
         return filtered_sensor_data
 
     except Exception as e:
-        logging.error(f"Failed to fetch sensor data from {file_name}: {e}")
+        logging.error(f"Failed to fetch sensor data from file.")
         return None
 
 
@@ -222,7 +222,7 @@ if __name__ == "__main__":
         s3_client = boto3.client(
             's3', aws_access_key_id=access_key, aws_secret_access_key=secret_key)
         weather_files = list_weather_files(bucket_name, s3_client)
-        logging.info(f"Returned weather files: {weather_files}")
+        logging.info(f"Returned weather files")
 
         historical_weather = get_last_10_days_weather(
             bucket_name, access_key, secret_key)
