@@ -6,7 +6,7 @@ from botocore.exceptions import NoCredentialsError
 from datetime import datetime
 
 # Serial connections for each Arduino
-ports = ["COM6", "COM7"]
+ports = ["/dev/ttyUSB0", "/dev/ttyUSB1"]
 serial_connections = [serial.Serial(port, 9600, timeout=1) for port in ports]
 
 # Base path for local files
@@ -54,7 +54,7 @@ def append_data_to_s3(data, s3_file_path):
         # Write the updated data back to S3
         s3_client.put_object(Bucket=bucket_name, Key=s3_file_path, Body=json.dumps(sensor_data_list))
         print(f"Data successfully appended to S3: {s3_file_path}")
-    
+
     except NoCredentialsError:
         print("AWS credentials not available.")
     except Exception as e:
@@ -67,32 +67,35 @@ def celsius_to_fahrenheit(celsius):
 # Collect sensor data and save locally and in S3
 def collect_and_save_data():
     sensor_data = {}
+    collected_sensors = {}
 
-    # Collect data from all the connected Arduinos
-    for idx, ser in enumerate(serial_connections):
-        if ser.in_waiting > 0:
-            line = ser.readline().decode('utf-8').strip()
-            print(f"Sensor {idx}: {line}")
+    while len(collected_sensors) < len(serial_connections):
+        # Collect data from all the connected Arduinos
+        for idx, ser in enumerate(serial_connections):
+            if ser.in_waiting > 0 and idx not in collected_sensors:
+                line = ser.readline().decode('utf-8').strip()
+                print(f"Sensor {idx}: {line}")
 
-            # Assuming sensor data contains temperature in Celsius, convert to Fahrenheit
-            if "temperature" in line.lower():
-                celsius_value = float(line.split()[-1])  # Assuming the temperature is the last value in the line
-                fahrenheit_value = celsius_to_fahrenheit(celsius_value)
-                sensor_data[f'sensor_{idx}_temperature_F'] = fahrenheit_value
-            else:
-                sensor_data[f'sensor_{idx}'] = line
+                # Assuming sensor data contains temperature in Celsius, convert to Fahrenheit
+                if "temperature" in line.lower():
+                    celsius_value = float(line.split()[-1])  # Assuming the temperature is the last value in the line
+                    fahrenheit_value = celsius_to_fahrenheit(celsius_value)
+                    collected_sensors[f'sensor_{idx}_temperature_F'] = fahrenheit_value
+                else:
+                    collected_sensors[f'sensor_{idx}'] = line
 
-    # Add a timestamp to the data
-    sensor_data['timestamp'] = time.strftime("%Y-%m-%d %H:%M:%S")
+    if len(collected_sensors) == len(serial_connections):
+       collected_sensors['timestamp'] = time.strftime("%Y-%m-%d %H:%M:%S")
 
-    # Get the file paths for today
-    local_file_path, s3_file_path = get_file_paths()
+       local_file_path, s3_file_path = get_file_paths()
 
-    # Write data to local file
-    write_data_to_local_file(sensor_data, local_file_path)
+       write_data_to_local_file(collected_sensors, local_file_path)
 
-    # Append data to the S3 file for today
-    append_data_to_s3(sensor_data, s3_file_path)
+       append_data_to_s3(collected_sensors, s3_file_path)
+
+    else:
+        print("Incomplete data from sensors. Nothing appended")
+
 
 if __name__ == "__main__":
     collect_and_save_data()
