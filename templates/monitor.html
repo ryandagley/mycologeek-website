@@ -80,6 +80,16 @@
             </nav>
             <!-- End nav -->
 
+            <section></section>
+                <h2 class="heading-inner">Lab Monitor</h3>    
+                    <p>The Lab Monitor is a dashboard that displays data collected from the lab's sensors, 
+                        offering insights into environmental conditions and other key metrics. As the lab expands, 
+                        more sensors and data streams will be added, making the dashboard a central hub for tracking 
+                        and analyzing the lab's ongoing experiments and environment.</p>                
+                </div>
+            </section>
+
+
             <!-- Weather Report Section -->
             <section>
                 <h3 class="heading-inner">Weather Report</h3>
@@ -99,6 +109,7 @@
             <!-- Historical Weather Data Section -->
             <section>
                 <h3 class="heading-inner">Historical Weather Data</h3>
+                <p>Weather for the past 10 days in Tacoma, WA, home of the Mycologeek project.</p>
                 <div class="weather-history">
                     {% if historical_weather %}
                     <table class="table table-striped">
@@ -131,6 +142,7 @@
 
             <section>
                 <h3 class="heading-inner">Sensor Data</h3>
+                <p>These are the sensors for the Artemis Mushroom Lab!  I build sensors to keep track of the lab environment.  Currently tracking temperature from two sensors!</p>
                 <div class="sensor-data">
                     {% if sensor_data %}
                     <table class="table table-striped">
