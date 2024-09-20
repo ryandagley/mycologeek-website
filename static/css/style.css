@@ -311,6 +311,8 @@ p {
 .main-image {
   margin-top: 20px;
   z-index: 1;
+  margin: auto;
+  display:block;
 }
 
 .box-home {
