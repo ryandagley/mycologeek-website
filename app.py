@@ -1,7 +1,7 @@
 from flask import Flask, render_template, abort
 import os
 import requests
-from weather import get_weather_data, get_api_key, get_weather_history, get_secrets, get_last_10_days_weather, get_sensor_data
+from weather import get_weather_data, get_api_key, get_weather_history_from_dynamodb, get_secrets, get_sensor_data
 from datetime import datetime
 import markdown
 import pytz
@@ -57,7 +57,10 @@ def monitor():
     api_key = get_api_key(secret_name)
     temperature = get_weather_data(city_name, api_key)
 
-    # Fetch historical weather data from S3
+    # Fetch historical weather data from DynamoDB
+    historical_weather = get_weather_history_from_dynamodb(city_name)
+
+    # Fetch sensor data from S3
     s3_access_name = "cred-keys"
     secret = get_secrets(s3_access_name)
 
@@ -73,15 +76,10 @@ def monitor():
         access_key = secret.get('access_key')
         secret_key = secret.get('secret_key')
 
-        # Fetch the last 10 days of weather history
-        historical_weather = get_last_10_days_weather(
-            bucket_name, access_key, secret_key)
-
         # Fetch the most recent 20 sensor readings
         sensor_data = get_sensor_data(
             bucket_name, sensor_file_name, access_key, secret_key)
     else:
-        historical_weather = None
         sensor_data = None
 
     # Choose background image based on weather description
