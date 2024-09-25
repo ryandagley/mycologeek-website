@@ -14,6 +14,8 @@ app = Flask(__name__)
 pacific_tz = pytz.timezone('US/Pacific')
 
 # Routes to the templates
+
+
 @app.route('/')
 @app.route('/index.html')
 def index():
@@ -23,6 +25,11 @@ def index():
 @app.route('/about.html')
 def about():
     return render_template('about.html')
+
+
+@app.route('/archive.html')
+def archive():
+    return render_template('archive.html')
 
 
 @app.route('/about-ryan.html')
@@ -65,10 +72,10 @@ def monitor():
     secret = get_secrets(s3_access_name)
 
     bucket_name = "mycologeek"
-    
+
     # Get the current date in Pacific Time Zone
     pacific_time = datetime.now(pacific_tz)
-    
+
     # Fetch today's sensor file based on Pacific Time
     sensor_file_name = f"sensors/{pacific_time.strftime('%Y-%m-%d')}-sensor-data.json"
 
@@ -106,6 +113,7 @@ def monitor():
 def technical():
     return render_template('technical.html')
 
+
 @app.route('/articles/<name>')
 def article(name):
     # Path to the Markdown file within the static folder
@@ -122,7 +130,6 @@ def article(name):
     html_content = markdown.markdown(md_content)
 
     return render_template('article.html', content=html_content, title=name)
-
 
 
 if __name__ == '__main__':
