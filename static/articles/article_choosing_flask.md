@@ -1,10 +1,16 @@
-# Why I Chose Flask for My Website and How to Set It Up
+# Why I Chose Flask for My Website
 
-# Date: Sometime late 2020, article written September 2024
+## Date: Sometime late 2020, Last updated September 2024
 
-A few years ago, I found myself wanting to learn more about Python. I was working in data analytics at the time, so Python was somewhat common in my job, but fell far short of SQL. While I already had a basic understanding of HTML and CSS, and some very basic JavaScript, none of those skills had much practical usage in my day-to-day work. Python, on the other hand, seemed like something worth diving deeper into. Fast forward to today, and I’m still very much a student of Python, though my job role has since changed.
+<img src="../static/img/articles/python.png" alt="description" style="float: left; margin-right: 20px; width: 30%; max-width: 100%;" />
+A few years ago, I found myself wanting to learn more about Python. I was working in data analytics at the time, so Python was somewhat common in my job, but its use fell far short of SQL. While I already had a basic understanding of HTML and CSS, and some very basic JavaScript, none of those skills had much practical usage in my day-to-day work. Python, on the other hand, seemed like something worth diving deeper into. Fast forward to today, and I’m still very much a student of Python, though my job role has since changed.
 
 Initially, my website was a collection of static HTML files that I hosted in an S3 bucket on AWS. It worked fine for what it was, but it wasn’t particularly impressive, and it didn’t provide the opportunity to work with Python, which was something I wanted. So, I set out to rebuild my site using Flask, a lightweight Python web framework. At first, I was still manually copying all the files over to S3, but eventually, I found a better way.
+
+<div style="clear: both;"></div>
+
+---
+
 
 ## Benefits of Python and Flask for Web Development
 
@@ -18,6 +24,14 @@ There are several reasons I chose Flask and Python for web development:
 
 4. **Learning Opportunity**: Because Flask is minimalistic, it forces you to learn about the building blocks of web development, like routing, templating, and request handling. This hands-on learning helped me better understand how web applications work behind the scenes.
 
+<div style="clear: both;"></div>
+
+---
+
+<img src="../static/img/articles/flask2.png" alt="description" style="float: right; margin-left: 10px; width: 30%; max-width: 100%;" />
+
+
+
 ## The Reality of Using Flask
 
 While I enjoy working with Python and Flask, I understand that Flask isn't the most sought-after framework in the web development world. A lot of people are leaning towards JavaScript frameworks like React, especially since JavaScript is so prevalent on the front end. But for me, this is a side project, and I have to balance my time, energy, and (unfortunately) limited mental capacity. I need to focus on building skills that make sense for me overall, rather than spreading myself thin across too many technologies.
@@ -25,6 +39,9 @@ While I enjoy working with Python and Flask, I understand that Flask isn't the m
 That said, it’s hard for me to say that I’m truly learning Python deeply by using Flask. Yes, it teaches me some Python syntax and best practices, but I'm mostly learning a specific use-case for Python in web development. And you know what? That’s okay. It’s part of the learning process. 
 
 In some ways, choosing Flask also forced me to think about how I wanted to deploy my website. This led me to explore AWS Elastic Beanstalk, which has been a valuable, and sometimes very frustrating, learning experience in itself (I'll write about Elastic Beanstalk in another article). 
+
+<div style="clear: both;"></div>
+---
 
 ## The Next Step: Structuring and Compartmentalizing My Flask App
 
