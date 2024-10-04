@@ -67,31 +67,27 @@ def monitor():
     # Fetch historical weather data from DynamoDB
     historical_weather = get_weather_history_from_dynamodb(city_name)
 
+    # Fetch temperature and humidity data for the chart
+    dates = [entry['date'] for entry in historical_weather]
+    temperatures = [entry['temperature'] for entry in historical_weather]
+    humidities = [entry['humidity'] for entry in historical_weather]
+
     # Fetch sensor data from S3
     s3_access_name = "cred-keys"
     secret = get_secrets(s3_access_name)
 
     bucket_name = "mycologeek"
-
-    # Get the current date in Pacific Time Zone
     pacific_time = datetime.now(pacific_tz)
-
-    # Fetch today's sensor file based on Pacific Time
     sensor_file_name = f"sensors/{pacific_time.strftime('%Y-%m-%d')}-sensor-data.json"
 
     if secret:
         access_key = secret.get('access_key')
         secret_key = secret.get('secret_key')
-
-        # Fetch the most recent 20 sensor readings
-        sensor_data = get_sensor_data(
-            bucket_name, sensor_file_name, access_key, secret_key)
+        sensor_data = get_sensor_data(bucket_name, sensor_file_name, access_key, secret_key)
     else:
         sensor_data = None
 
-    # Choose background image based on weather description
     weather_condition = temperature['main'].lower()
-
     if "clear" in weather_condition:
         background_image = '../img/clear_sky.png'
     elif "rainy" in weather_condition:
@@ -105,8 +101,10 @@ def monitor():
     else:
         background_image = '../img/mushroom_bg.png'
 
-    # Pass the background image, historical weather, and sensor data to the template
-    return render_template('monitor.html', temperature=temperature, city=city_name, background_image=background_image, historical_weather=historical_weather, sensor_data=sensor_data)
+    # Pass the data to the template
+    return render_template('monitor.html', temperature=temperature, city=city_name, 
+                           background_image=background_image, historical_weather=historical_weather, 
+                           sensor_data=sensor_data, dates=dates, temperatures=temperatures, humidities=humidities)
 
 
 @app.route('/technical.html')

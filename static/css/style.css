@@ -1221,16 +1221,31 @@ h6 span {
   }
 }
 
+.weather-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px; /* Space between the weather report and chart */
+}
+
+
 .weather-card {
   position: relative;
   height: 400px;
   border-radius: 15px; /* Rounded corners */
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-  max-width: 400px;
+  max-width: 50%;
   margin: 20px auto;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+  flex:1;
+}
+
+.weather-chart {
+  flex: 1; 
+  max-width: 100%; 
+  height: auto;
 }
 
 .weather-text {
@@ -1282,4 +1297,16 @@ h6 span {
 
 .weather-text li {
   margin: 10px 0; /* Add space between list items */
+}
+
+@media (max-width: 768px) {
+  .weather-container {
+    flex-direction: column; /* Stack elements vertically on small screens */
+    align-items: center;
+  }
+
+  .weather-card,
+  .weather-chart {
+    max-width: 100%; /* Make the elements take full width */
+  }
 }

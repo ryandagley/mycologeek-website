@@ -25,6 +25,9 @@
 
     <!-- Font awesome -->
     <link href="static/font-awesome-4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- ChartJS -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body>
@@ -90,27 +93,36 @@
             </section>
 
 
-            <!-- Weather Report Section -->
-            <section>
-                <h3 class="heading-inner">Weather Report</h3>
-                <div class="weather-card" style="background-image: url('/static/img/{{ background_image }}');">
-                    <div class="weather-text">
-                        <h4>Current weather at Artemis Lab in {{ city }}</h4>
-                        <ul>
-                            <li><strong>Today's Weather:</strong> {{ temperature.description }}</li>
-                            <li><strong>Temperature:</strong> {{ temperature.temperature }}°F</li>
-                            <li><strong>Humidity:</strong> {{ temperature.humidity }}%</li>
-                            <li><strong>Today's High/Low: </strong> {{ temperature.temp_max }} °F/ {{ temperature.temp_min }} °F</li>
-                        </ul>
-                    </div>
-                </div>
-            </section>
+<!-- Weather Report Section -->
+<section>
+    <h3 class="heading-inner">Weather Report</h3>
+    <div class="weather-container">
+        <!-- Weather Report -->
+        <div class="weather-card" style="background-image: url('/static/img/{{ background_image }}');">
+            <div class="weather-text">
+                <h4>Current weather at Artemis Lab in {{ city }}</h4>
+                <ul>
+                    <li><strong>Today's Weather:</strong> {{ temperature.description }}</li>
+                    <li><strong>Temperature:</strong> {{ temperature.temperature }}°F</li>
+                    <li><strong>Humidity:</strong> {{ temperature.humidity }}%</li>
+                    <li><strong>Today's High/Low: </strong> {{ temperature.temp_max }} °F/ {{ temperature.temp_min }} °F</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Weather Chart -->
+        <div class="weather-chart">
+            <canvas id="weatherChart" width="400" height="300"></canvas>
+        </div>
+    </div>
+</section>
 
             <!-- Historical Weather Data Section -->
             <section>
                 <h3 class="heading-inner">Historical Weather Data</h3>
                 <p>Weather for the past 10 days in Tacoma, WA, home of the Mycologeek project.</p>
                 <div class="weather-history">
+                    <!-- Existing table code for weather history -->
                     {% if historical_weather %}
                     <table class="table table-striped">
                         <thead>
@@ -137,8 +149,13 @@
                     {% else %}
                     <p>No historical data available</p>
                     {% endif %}
+            
+                    
                 </div>
             </section>
+            
+
+
 
             <section>
                 <h3 class="heading-inner">Sensor Data</h3>
@@ -194,10 +211,75 @@
     <!-- Wow JavaScript -->
     <script src="static/js/wow.js"></script>
 
-    <script>
-        new WOW().init();
-    </script>
 
+
+
+    <script>
+        var ctx = document.getElementById('weatherChart').getContext('2d');
+    
+        // Use the 'tojson' filter to safely convert Python data to JavaScript JSON
+        var dates = {{ dates | tojson }};
+        var temperatures = {{ temperatures | tojson }};
+        var humidities = {{ humidities | tojson }};
+    
+        var weatherChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: dates,  // Use the JSON serialized dates
+                datasets: [{
+                    label: 'Temperature (°F)',
+                    data: temperatures,  // Use the JSON serialized temperature values
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    fill: true,
+                    yAxisID: 'y1',
+                },
+                {
+                    label: 'Humidity (%)',
+                    data: humidities,  // Use the JSON serialized humidity values
+                    borderColor: 'rgba(153, 102, 255, 1)',
+                    backgroundColor: 'rgba(153, 102, 255, 0.2)',
+                    fill: true,
+                    yAxisID: 'y2',
+                }]
+            },
+            options: {
+                scales: {
+                    x: {
+                ticks: {
+                    // Format the timestamp as "month year"
+                    callback: function(value, index, values) {
+                        return new Date(value).toLocaleDateString('en-US', {
+                            month: 'short',
+                            year: 'numeric'
+                        });
+                    },
+                    // Rotate labels by 90 degrees
+                    minRotation: 90,
+                    maxRotation: 90
+                }
+                    },
+                    y1: {
+                        type: 'linear',
+                        position: 'left',
+                        title: {
+                            display: true,
+                            text: 'Temperature (°F)'
+                        }
+                    },
+                    y2: {
+                        type: 'linear',
+                        position: 'right',
+                        title: {
+                            display: true,
+                            text: 'Humidity (%)'
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+    
 </body>
 
 </html>
