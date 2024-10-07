@@ -211,20 +211,33 @@
 
 
     <script>
-        var ctx = document.getElementById('weatherChart').getContext('2d');
-    
-        // Use the 'tojson' filter to safely convert Python data to JavaScript JSON
+        // Pass data from Flask to JavaScript as JSON
         var dates = {{ dates | tojson }};
         var temperatures = {{ temperatures | tojson }};
         var humidities = {{ humidities | tojson }};
     
+        // Reverse the arrays to display oldest to newest
+        dates = dates.reverse();
+        temperatures = temperatures.reverse();
+        humidities = humidities.reverse();
+    
+        // Debug: Log the reversed dates to ensure they are in the right order
+        console.log("Reversed dates:", dates);
+    
+        // Convert date strings to JavaScript Date objects
+        dates = dates.map(function(dateString) {
+            return new Date(dateString);  // Ensure the dates are converted to Date objects
+        });
+    
+        var ctx = document.getElementById('weatherChart').getContext('2d');
+    
         var weatherChart = new Chart(ctx, {
             type: 'line',
             data: {
-                labels: dates,  // Use the JSON serialized dates
+                labels: dates,  // Use the reversed Date objects
                 datasets: [{
                     label: 'Temperature (°F)',
-                    data: temperatures,  // Use the JSON serialized temperature values
+                    data: temperatures,
                     borderColor: 'rgba(75, 192, 192, 1)',
                     backgroundColor: 'rgba(75, 192, 192, 0.2)',
                     fill: true,
@@ -232,7 +245,7 @@
                 },
                 {
                     label: 'Humidity (%)',
-                    data: humidities,  // Use the JSON serialized humidity values
+                    data: humidities,
                     borderColor: 'rgba(153, 102, 255, 1)',
                     backgroundColor: 'rgba(153, 102, 255, 0.2)',
                     fill: true,
@@ -242,18 +255,17 @@
             options: {
                 scales: {
                     x: {
-                ticks: {
-                    // Format the timestamp as "month year"
-                    callback: function(value, index, values) {
-                        return new Date(value).toLocaleDateString('en-US', {
-                            month: 'short',
-                            year: 'numeric'
-                        });
-                    },
-                    // Rotate labels by 90 degrees
-                    minRotation: 90,
-                    maxRotation: 90
-                }
+                        ticks: {
+                            callback: function(value, index, values) {
+                                return new Date(value).toLocaleDateString('en-US', {
+                                    month: 'short',
+                                    day: 'numeric',
+                                    year: 'numeric'
+                                });
+                            },
+                            minRotation: 90,
+                            maxRotation: 90
+                        }
                     },
                     y1: {
                         type: 'linear',
@@ -275,6 +287,7 @@
             }
         });
     </script>
+    
     
 </body>
 
