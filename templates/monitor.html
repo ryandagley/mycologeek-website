@@ -221,20 +221,21 @@
         temperatures = temperatures.reverse();
         humidities = humidities.reverse();
     
-        // Debug: Log the reversed dates to ensure they are in the right order
-        console.log("Reversed dates:", dates);
-    
-        // Convert date strings to JavaScript Date objects
+        // Pre-format the date strings into "MMM DD" (e.g., "Oct 07")
         dates = dates.map(function(dateString) {
-            return new Date(dateString);  // Ensure the dates are converted to Date objects
+            var parsedDate = new Date(dateString);
+            return parsedDate.toLocaleDateString('en-US', {
+                month: 'short',
+                day: 'numeric'
+            });
         });
-    
+        
         var ctx = document.getElementById('weatherChart').getContext('2d');
     
         var weatherChart = new Chart(ctx, {
             type: 'line',
             data: {
-                labels: dates,  // Use the reversed Date objects
+                labels: dates, 
                 datasets: [{
                     label: 'Temperature (°F)',
                     data: temperatures,
@@ -256,13 +257,6 @@
                 scales: {
                     x: {
                         ticks: {
-                            callback: function(value, index, values) {
-                                return new Date(value).toLocaleDateString('en-US', {
-                                    month: 'short',
-                                    day: 'numeric',
-                                    year: 'numeric'
-                                });
-                            },
                             minRotation: 90,
                             maxRotation: 90
                         }
@@ -287,6 +281,7 @@
             }
         });
     </script>
+    
     
     
 </body>
