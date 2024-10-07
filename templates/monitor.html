@@ -258,29 +258,64 @@
                     x: {
                         ticks: {
                             minRotation: 90,
-                            maxRotation: 90
-                        }
+                            maxRotation: 90,
+                            color: '#ffffff'
+                        },
+                    grid: {
+                        color: '#444444'  
+                    }
+                },
+                y1: {
+                    type: 'linear',
+                    position: 'left',
+                    title: {
+                        display: true,
+                        text: 'Temperature (°F)',
+                        color: '#ffffff' 
                     },
-                    y1: {
-                        type: 'linear',
-                        position: 'left',
-                        title: {
-                            display: true,
-                            text: 'Temperature (°F)'
-                        }
+                    ticks: {
+                        color: '#ffffff'  
                     },
-                    y2: {
-                        type: 'linear',
-                        position: 'right',
-                        title: {
-                            display: true,
-                            text: 'Humidity (%)'
-                        }
+                    grid: {
+                        color: '#444444'  
+                    }
+                },
+                y2: {
+                    type: 'linear',
+                    position: 'right',
+                    title: {
+                        display: true,
+                        text: 'Humidity (%)',
+                        color: '#ffffff'  
+                    },
+                    ticks: {
+                        color: '#ffffff' 
+                    },
+                    grid: {
+                        color: '#444444'  
                     }
                 }
+            },
+            plugins: {
+                legend: {
+                    labels: {
+                        color: '#ffffff'  
+                    }
+                }
+            },
+            layout: {
+                padding: 20  
             }
-        });
-    </script>
+        },
+        plugins: [{
+            beforeDraw: function(chart) {
+                var ctx = chart.ctx;
+                ctx.fillStyle = '#333333';  
+                ctx.fillRect(0, 0, chart.width, chart.height);
+            }
+        }]
+    });
+</script>
     
     
     
