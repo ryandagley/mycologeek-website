@@ -114,10 +114,10 @@ def technical():
     return render_template('technical.html')
 
 # Blog post route: fetch post from S3 and render it
-@app.route('/blog/<year>/<slug>')
-def blog_post(year, slug):
+@app.route('/blog/<slug>')
+def blog_post(slug):
     # Construct the S3 key from the year and slug
-    s3_post_key = f'blog/posts/{year}/{slug}/post.md'
+    s3_post_key = f'blog/posts/{slug}/post.md'
     
     # Fetch the post content from S3
     post_content_md = fetch_post_from_s3(S3_BUCKET, s3_post_key)
