@@ -70,7 +70,7 @@ h2 {
 }
 
 /* Specific style for H2 in blog posts */
-.blog-post-content h2 {
+.post-content h2 {
   font-family: 'Oxygen', sans-serif;
   font-size: 1.6em; /* Increase the size for better visibility */
   font-weight: 600; /* Make it bold */
@@ -79,6 +79,20 @@ h2 {
   margin-bottom: 20px;
   text-align: left; /* Align text to the left */
   line-height: 1.5em; /* Adjust line height */
+}
+
+/* Specific styles for links within blog posts */
+.post-content a {
+  color: #3a7999; /* A bright color for visibility */
+  text-decoration: underline !important; 
+  font-weight: 600; /* Slightly bolder to stand out */
+  transition: all 0.2s ease-in-out;
+}
+
+.post-content a:hover {
+  color: #4f4d47; /* Changes color on hover */
+  text-decoration: underline !important; /* Keeps the underline for clarity */
+  font-weight: 700; /* Further bold on hover */
 }
 
 
