@@ -16,6 +16,10 @@ pacific_tz = pytz.timezone('US/Pacific')
 S3_BUCKET = 'mycologeek'
 s3_client = boto3.client('s3')
 
+# AWS DynamoDB Setup
+dynamodb = boto3.resource('dynamodb')
+table = dynamodb.Table('mg-BlogPosts')
+
 def fetch_post_from_s3(bucket, key):
     try:
         response = s3_client.get_object(Bucket=bucket, Key=key)
@@ -113,24 +117,43 @@ def monitor():
 def technical():
     return render_template('technical.html')
 
+def fetch_post_metadata(slug):
+    try:
+        print(f"Fetching metadata for slug: {slug}")  # Log the slug being used
+        response = table.get_item(Key={'PostID': slug})
+        print(f"DynamoDB response: {response}")  # Log the full response from DynamoDB
+        return response.get('Item')  # Return the metadata if it exists
+    except Exception as e:
+        print(f"Error fetching metadata from DynamoDB: {e}")
+        return None
+
 # Blog post route: fetch post from S3 and render it
 @app.route('/blog/<slug>')
 def blog_post(slug):
-    # Construct the S3 key from the year and slug
-    s3_post_key = f'blog/posts/{slug}/post.md'
+    # Fetch post metadata from DynamoDB
+    metadata = fetch_post_metadata(slug)
     
-    # Fetch the post content from S3
-    post_content_md = fetch_post_from_s3(S3_BUCKET, s3_post_key)
-    
-    if post_content_md is None:
+    if not metadata:
         return "Post not found!", 404
+
+    # Fetch the post content from S3 using the slug
+    s3_post_key = f'blog/posts/{slug}/post.md'
+    post_content_md = fetch_post_from_s3(S3_BUCKET, s3_post_key)
+
+    if post_content_md is None:
+        return "Post content not found!", 404
 
     # Convert the Markdown content to HTML
     post_content_html = markdown.markdown(post_content_md)
 
-    # Render the post in the template
-    return render_template('post.html', post_content=post_content_html, title=slug.replace('-', ' ').title())
-
+    # Render the post with metadata from DynamoDB
+    return render_template(
+        'post.html', 
+        post_content=post_content_html, 
+        title=metadata['Title'],  # Use title from DynamoDB metadata
+        snippet=metadata.get('Snippet', 'No snippet available'),  # Optional fields
+        featured_image_url=metadata.get('FeaturedImageURL', 'default-image.jpg')  # Optional image field
+    )
 @app.route('/articles/<name>')
 def article(name):
     # Path to the Markdown file within the static folder
