@@ -69,6 +69,19 @@ h2 {
   line-height: 1.7em;
 }
 
+/* Specific style for H2 in blog posts */
+.blog-post-content h2 {
+  font-family: 'Oxygen', sans-serif;
+  font-size: 1.6em; /* Increase the size for better visibility */
+  font-weight: 600; /* Make it bold */
+  color: #4f4d47; /* Darker color for contrast */
+  margin-top: 40px;
+  margin-bottom: 20px;
+  text-align: left; /* Align text to the left */
+  line-height: 1.5em; /* Adjust line height */
+}
+
+
 h3 {
   font-family: 'Oxygen', sans-serif;
   font-size: 1em;
