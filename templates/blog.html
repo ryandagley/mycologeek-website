@@ -1,42 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <title>Mycologeek - Blog</title>
+<head>
+    <title>Mycologeek - Blog</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link href='https://fonts.googleapis.com/css?family=Oxygen:400,300' rel='stylesheet'>
+</head>
+<body>
 
-        <meta charset="utf-8">
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Start wrapper -->
+<div class="wrapper">
+    <div class="container">
 
-        <!-- Favicon -->
-        <link rel="shortcut icon" type="image/png" href="/static/img/favicon.png">
-        
-        <!-- Boostrap Core CSS-->
-        <link rel="stylesheet" href="/static/css/bootstrap.min.css">
-        
-        <!-- Main CSS -->
-        <link rel="stylesheet" href="/static/css/style.css">
-        
-        <!-- Animate CSS -->
-        <link href="/static/css/animate.css" rel="stylesheet">
-        
-        <!-- Google fonts -->
-        <link href='https://fonts.googleapis.com/css?family=Oxygen:400,300' rel='stylesheet' type='text/css'>
-        <link href="https://fonts.googleapis.com/css2?family=Life+Savers:wght@400;700&display=swap" rel="stylesheet">
-        <!-- Font awesome -->
-        <link href="/static/font-awesome-4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-
-   </head>
-   <body>
-
-
-   <!-- Start wrapper -->
-   <div class="wrapper">
-    <div class="col-md-12">
-     <!-- Logo -->
-
-
-     <!-- Navigation -->
-     <nav class="navbar navbar-default" role="navigation">
+       <!-- Navigation -->
+       <nav class="navbar navbar-default" role="navigation">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
@@ -52,30 +31,30 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
                 <li>
-                    <a href="index.html">Home</a>
+                    <a href="../../index.html">Home</a>
                  </li>
                     <li class="dropdown">
-                      <a href="about.html" class="dropdown-toggle" data-toggle="dropdown">About<b class="caret"></b></a>
+                      <a href="../../about.html" class="dropdown-toggle" data-toggle="dropdown">About<b class="caret"></b></a>
                       <ul class="dropdown-menu">
                           <li>
-                              <a href="about.html">About Mycologeek</a>
+                              <a href="../../about.html">About Mycologeek</a>
                           </li>
                           <li>
-                              <a href="about-ryan.html">About Ryan</a>
+                              <a href="../../about-ryan.html">About Ryan</a>
                           </li>
                       </ul>
                   </li>
                 <li>
-                   <a href="monitor.html">Monitor</a>
+                   <a href="../../monitor.html">Monitor</a>
                 </li>
                 <li>
-                   <a href="gallery.html">Gallery</a>
+                   <a href="../../gallery.html">Gallery</a>
                 </li>
                 <li>
-                   <a  href="technical.html">Technical</a>
+                   <a  href="../../technical.html">Technical</a>
                 </li>
-                <li>
-                   <a href="blog.html">blog</a>
+                <li class="active">
+                   <a href="../../../blog.html">Blog</a>
                 </li>
             </ul>
         </div>
@@ -83,47 +62,141 @@
      </nav>
      <!-- End nav -->
 
-<div class="container">
-    <h3 class="heading-inner">Welcome to the Mycologeek Blog!</h3>
-    <div class="blog-posts" id="blog-posts">
-        <!-- Blog posts will be inserted here -->
+     <div class="margin-news">
+        <div class="col-md-10 col-xs-offset-1">
+          <h4 class="heading-inner">Mycologeek's Log of the Greatest Ideas</h4>
+        <!-- Main Blog Post (Latest) -->
+        <div class="row">
+            <div class="col-md-8">
+                <div class="main-post" style="position: relative;">
+                    <a href="">
+                        <img src="IMAGE_URL" alt="Latest Post Image" class="img-responsive">
+                    </a>
+                    <div class="main-post-overlay">
+                        <h1><a href="">Latest Post Title</a></h1>
+                        <p>by Author | Published on Date</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Featured Posts (Tech and Mushroom) -->
+            <div class="col-md-4">
+                <div class="featured-post">
+                    <img src="TECH_POST_IMAGE_URL" alt="Tech Post" class="img-responsive">
+                    <h3>Tech Post Title</h3>
+                    <p>by Author | Published on Date</p>
+                </div>
+                <div class="featured-post">
+                    <a href="">
+                        <img src="TECH_POST_IMAGE_URL" alt="Tech Post" class="img-responsive">
+                    </a>
+                    <h3><a href="">Tech Post Title</a></h3>
+                    <p>by Author | Published on Date</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Trending Now Section -->
+        <div class="trending-now">
+            <h2>Trending Now</h2>
+            <div class="row">
+                <div class="col-md-4 trending-post">
+                    <a href="">
+                        <img src="TRENDING_POST_1_IMAGE" alt="Trending Post 1" class="img-responsive">
+                    </a>
+                    <h4><a href="">Trending Post 1 Title</a></h4>
+                    <p>Published on Date</p>
+                </div>
+                
+                <div class="col-md-4 trending-post">
+                    <a href="">
+                    <img src="TRENDING_POST_2_IMAGE" alt="Trending Post 2" class="img-responsive">
+                </a>
+                    <h4><a href=""></a>Trending Post 2 Title</h4>
+                    <p>Published on Date</p>
+                </div>
+                <div class="col-md-4 trending-post">
+                    <a href="">
+                    <img src="TRENDING_POST_3_IMAGE" alt="Trending Post 3" class="img-responsive">
+                </a>
+                    <h4><a href=""></a>Trending Post 3 Title</h4>
+                    <p>Published on Date</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Archives Section -->
+        <div class="row archives">
+            <div class="col-md-6">
+                <!-- <h3>Search by Date</h3> -->
+                <ul id="archive-dates">
+                    <!-- Dates will be dynamically generated here -->
+                </ul>
+            </div>
+            <div class="col-md-6">
+                <!-- <h3>Search by Category</h3>  -->
+                <ul id="archive-categories">
+                    <!-- Categories will be dynamically generated here -->
+                </ul>
+            </div>
+        </div>
     </div>
 </div>
 
-</div></div>
 
-<!-- JavaScript to fetch blog metadata and render posts -->
+
 <script>
-async function loadBlogPosts() {
-    const response = await fetch('https://dvt5d6vfgi.execute-api.us-west-2.amazonaws.com/dev/blog/'); // Replace with API Gateway URL
-    const responseData = await response.json();
+ async function loadBlogPosts() {
+    try {
+        const response = await fetch('https://dvt5d6vfgi.execute-api.us-west-2.amazonaws.com/dev/blog/');
+        const responseData = await response.json();
+        
+        // If the API response contains a body that is a stringified JSON, parse it
+        const data = JSON.parse(responseData.body);
 
-    // Parse the body field, which is a stringified JSON object
-    const data = JSON.parse(responseData.body);
-    
-    console.log("Parsed blog post data: ", data); // Debugging line to check the parsed data
+        console.log("Parsed blog post data:", data);
 
-    const blogPostsContainer = document.getElementById('blog-posts');
-    
-    data.forEach(post => {
-        const postElement = document.createElement('div');
-        postElement.classList.add('blog-post');
+        if (data.length > 0) {
+            // Main Post (Latest)
+            const latestPost = data[0];
+            document.querySelector('.main-post img').src = latestPost.FeaturedImageURL;
+            document.querySelector('.main-post-overlay h1').innerHTML = `<a href="/blog/${latestPost.PostID}">${latestPost.Title}</a>`;
+            document.querySelector('.main-post-overlay p').innerText = `by ${latestPost.Author} | Published on ${latestPost.Date}`;
+            document.querySelector('.main-post a').href = `/blog/${latestPost.PostID}`;  // Make the image clickable
 
-        // Access the correct field names based on the actual data returned
-        postElement.innerHTML = `
-            <div class="row">
-                <div class="col-md-4">
-                    <img src="${post.FeaturedImageURL || post.featured_image_url}" alt="${post.Title}" class="img-responsive">
-                </div>
-                <div class="col-md-8">
-                    <h3><a href="/blog/${post.PostID}">${post.Title}</a></h3>
-                    <p>${post.Excerpt || post.snippet}</p>
-                    <p><a href="/blog/${post.PostID}" class="btn btn-primary">Read More</a></p>
-                </div>
-            </div>
-        `;
-        blogPostsContainer.appendChild(postElement);
-    });
+            // Featured Tech and Mushroom Posts
+            const techPost = data.find(post => post.Category === 'Tech');
+            const mushroomPost = data.find(post => post.Category === 'Mushroom');
+
+            if (techPost) {
+                document.querySelectorAll('.featured-post')[0].querySelector('img').src = techPost.FeaturedImageURL;
+                document.querySelectorAll('.featured-post')[0].querySelector('h3').innerHTML = `<a href="/blog/${techPost.PostID}">${techPost.Title}</a>`;
+                document.querySelectorAll('.featured-post')[0].querySelector('p').innerText = `by ${techPost.Author} | Published on ${techPost.Date}`;
+                document.querySelectorAll('.featured-post')[0].querySelector('a').href = `/blog/${techPost.PostID}`;  // Make the image clickable
+            }
+
+            if (mushroomPost) {
+                document.querySelectorAll('.featured-post')[1].querySelector('img').src = mushroomPost.FeaturedImageURL;
+                document.querySelectorAll('.featured-post')[1].querySelector('h3').innerHTML = `<a href="/blog/${mushroomPost.PostID}">${mushroomPost.Title}</a>`;
+                document.querySelectorAll('.featured-post')[1].querySelector('p').innerText = `by ${mushroomPost.Author} | Published on ${mushroomPost.Date}`;
+                document.querySelectorAll('.featured-post')[1].querySelector('a').href = `/blog/${mushroomPost.PostID}`;  // Make the image clickable
+            }
+
+            // Trending Posts
+            for (let i = 1; i < 4; i++) {
+                const trendingPost = data[i];
+                if (trendingPost) {
+                    document.querySelectorAll('.trending-post img')[i - 1].src = trendingPost.FeaturedImageURL;
+                    document.querySelectorAll('.trending-post h4')[i - 1].innerHTML = `<a href="/blog/${trendingPost.PostID}">${trendingPost.Title}</a>`;
+                    document.querySelectorAll('.trending-post p')[i - 1].innerText = `by ${trendingPost.Author} | Published on ${trendingPost.Date}`;
+                    document.querySelectorAll('.trending-post a')[i - 1].href = `/blog/${trendingPost.PostID}`;  // Make the image clickable
+                }
+            }
+        } else {
+            console.error('No posts found');
+        }
+    } catch (error) {
+        console.error('Failed to load blog posts:', error);
+    }
 }
 
 loadBlogPosts();
