@@ -1339,10 +1339,12 @@ h6 span {
 .main-post {
   position: relative;
 }
-.main-post img {
-  width: 100%;
-  height: auto;
+.main-post-image {
+  width: 727px; /* Fixed width */
+  height: 500px; /* Fixed height */
+  object-fit: cover; /* Crop the image to fill the container */
 }
+
 .main-post-overlay {
   position: absolute;
   bottom: 20px;
@@ -1351,6 +1353,15 @@ h6 span {
   padding: 20px;
   color: white;
 }
+
+.main-post-overlay a {
+  color: white;
+}
+.main-post-overlay a:hover {
+  color: white; 
+  text-decoration: underline; 
+}
+
 .main-post-overlay h1 {
   margin: 0;
   font-size: 2em;
@@ -1359,6 +1370,62 @@ h6 span {
 .main-post-overlay p {
   font-size: 1.2em;
   color: white;
+}
+
+/* Featured Posts */
+.featured-post {
+  position: relative;
+
+}
+
+.featured-post-overlay a {
+  color: white; 
+  text-decoration: none; 
+}
+
+.featured-post-overlay p {
+  color: white; 
+  text-decoration: none; 
+}
+
+/* Link color on hover */
+.featured-post-overlay a:hover {
+  color: white; 
+  text-decoration: underline; 
+}
+
+/* Visited link color */
+.featured-post-overlay a:visited {
+  color: white; 
+}
+
+/* Active link color (while clicking) */
+.featured-post-overlay a:active {
+  color: white; 
+}
+
+.featured-post-image {
+  width: 353px; /* Fixed width */
+  height: 240px; /* Fixed height */
+  object-fit: cover; /* Crop the image to fill the container */
+}
+
+.featured-post-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.0);
+  padding: 10px;
+  color: white;
+  box-sizing: border-box;
+}
+
+
+
+
+/* Ensure there's space between the two stacked featured posts */
+.featured-post + .featured-post {
+  margin-top: 20px;
 }
 
 .featured-post img {
