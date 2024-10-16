@@ -129,6 +129,17 @@ h4 {
   line-height: 1.7em;
 }
 
+.heading-inner-blog {
+  font-family: 'Noto Serif', cursive, Sans-serif;
+  font-size: 2.2em;
+  font-weight: 600;
+  color: #4f4d47;
+  margin-top: 16px;
+  margin-bottom: 0;
+  text-align: center;
+  line-height: 1.7em;
+}
+
 .hr {
   border-bottom: 2px solid #4f4d47;
   display: block;
@@ -1356,6 +1367,7 @@ h6 span {
 
 .main-post-overlay a {
   color: white;
+  font-family: 'Noto Serif', serif;
 }
 .main-post-overlay a:hover {
   color: white; 
@@ -1380,7 +1392,8 @@ h6 span {
 
 .featured-post-overlay a {
   color: white; 
-  text-decoration: none; 
+  text-decoration: none;
+  font-family: 'Noto Serif', serif; 
 }
 
 .featured-post-overlay p {
@@ -1430,7 +1443,7 @@ h6 span {
 
 .featured-post img {
   width: 100%;
-  height: 200px;
+  height: 240px;
 }
 .featured-post h3 {
   margin-top: 10px;
@@ -1443,6 +1456,7 @@ h6 span {
 .trending-now h2 {
   font-size: 1.8em;
   margin-bottom: 20px;
+  font-family: 'Noto Serif', serif;
 }
 .trending-post img {
     width: 100%;            /* Make the image take full width of the container */
@@ -1453,6 +1467,7 @@ h6 span {
 .trending-post h4 {
   margin-top: 10px;
   font-size: 1.1em;
+  font-family: 'Noto Serif', serif;
 }
 
 .archives {
