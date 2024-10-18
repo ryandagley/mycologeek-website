@@ -10,7 +10,7 @@
 
         gtag('config', 'G-LZZSLDQ0M5');
     </script>
-    
+
     <title>Mycologeek - Blog</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -205,12 +205,23 @@
             for (let i = 1; i < 4; i++) {
                 const trendingPost = data[i];
                 if (trendingPost) {
-                    document.querySelectorAll('.trending-post img')[i - 1].src = trendingPost.FeaturedImageURL;
-                    document.querySelectorAll('.trending-post h4')[i - 1].innerHTML = `<a href="/blog/${trendingPost.PostID}">${trendingPost.Title}</a>`;
-                    document.querySelectorAll('.trending-post p')[i - 1].innerText = `by ${trendingPost.Author} | Published on ${trendingPost.Date}`;
-                    document.querySelectorAll('.trending-post a')[i - 1].href = `/blog/${trendingPost.PostID}`;  // Make the image clickable
+                    const trendingPostContainer = document.querySelectorAll('.trending-post')[i - 1];
+                
+                    // Update image and image link
+                    const imgLink = trendingPostContainer.querySelector('a'); // The <a> wrapping the image
+                    imgLink.href = `/blog/${trendingPost.PostID}`;
+                    imgLink.querySelector('img').src = trendingPost.FeaturedImageURL;
+                    
+                    // Update title and title link
+                    const titleLink = trendingPostContainer.querySelector('h4 a'); // The <a> inside the h4
+                    titleLink.href = `/blog/${trendingPost.PostID}`;
+                    titleLink.innerText = trendingPost.Title;
+                    
+                    // Update publication info
+                    trendingPostContainer.querySelector('p').innerText = `by ${trendingPost.Author} | Published on ${trendingPost.Date}`;
                 }
             }
+
         } else {
             console.error('No posts found');
         }
