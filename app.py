@@ -5,6 +5,7 @@ from datetime import datetime
 import markdown
 import boto3
 import pytz
+import re
 
 # Define the app variable as Flask
 app = Flask(__name__)
@@ -19,6 +20,10 @@ s3_client = boto3.client('s3')
 # AWS DynamoDB Setup
 dynamodb = boto3.resource('dynamodb', region_name='us-west-2')
 table = dynamodb.Table('mg-BlogPosts')
+
+def add_lazy_loading_to_images(html_content):
+    # Find all img tags and add loading="lazy"
+    return re.sub(r'(<img\s+)', r'\1loading="lazy" ', html_content)
 
 def fetch_post_from_s3(bucket, key):
     try:
