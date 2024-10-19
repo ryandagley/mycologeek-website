@@ -5,7 +5,6 @@ from datetime import datetime
 import markdown
 import boto3
 import pytz
-import re
 
 # Define the app variable as Flask
 app = Flask(__name__)
@@ -20,10 +19,6 @@ s3_client = boto3.client('s3')
 # AWS DynamoDB Setup
 dynamodb = boto3.resource('dynamodb', region_name='us-west-2')
 table = dynamodb.Table('mg-BlogPosts')
-
-def add_lazy_loading_to_images(html_content):
-    # Find all img tags and add loading="lazy"
-    return re.sub(r'(<img\s+)', r'\1loading="lazy" ', html_content)
 
 def fetch_post_from_s3(bucket, key):
     try:
@@ -131,24 +126,23 @@ def fetch_post_metadata(slug):
     except Exception as e:
         print(f"Error fetching metadata from DynamoDB: {e}")
         return None
-    
+
 @app.route('/tags/<tag>')
-def tagged_posts(tag):
+def show_posts_by_tag(tag):
     try:
-        # Scan the DynamoDB table for posts with the given tag
+        # Scan DynamoDB for all posts that contain the specific tag
         response = table.scan(
             FilterExpression=boto3.dynamodb.conditions.Attr('Tags').contains(tag)
         )
-        posts = response['Items']
+        posts = response.get('Items', [])
         
-        # Sort the posts by date (assuming 'Date' field is in a sortable format)
-        sorted_posts = sorted(posts, key=lambda x: x['Date'], reverse=True)
-
-        return render_template('tags.html', posts=sorted_posts, tag=tag)
-
+        # Sort posts by date (newest to oldest)
+        posts = sorted(posts, key=lambda post: post['Date'], reverse=True)
+        
+        return render_template('tags.html', posts=posts, tag=tag)
     except Exception as e:
-        print(f"Error fetching posts with tag {tag}: {e}")
-        return "Error loading posts", 500
+        print(f"Error fetching posts by tag: {e}")
+        return "Error fetching posts by tag", 500
 
 
 # Blog post route: fetch post from S3 and render it

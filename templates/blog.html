@@ -192,50 +192,61 @@
         const responseData = await response.json();
 
         // Parse the response data
-        const data = JSON.parse(responseData.body); // Parse the body field if it's a string
+        const data = JSON.parse(responseData.body);
+        console.log("Parsed blog post data:", data);
 
-        // Create two sets to collect all tags for Mushroom and Tech categories
-        let mushroomTags = new Set();
-        let techTags = new Set();
-
-        // Main Post (Latest Post) 
         if (data.length > 0) {
+            // --------------------
+            // Main Post (Latest Post)
+            // --------------------
             const latestPost = data[0];
             document.querySelector('.main-post img').src = latestPost.FeaturedImageURL;
             document.querySelector('.main-post-overlay h1').innerHTML = `<a href="/blog/${latestPost.PostID}">${latestPost.Title}</a>`;
             document.querySelector('.main-post-overlay p').innerText = `by ${latestPost.Author} | Published on ${latestPost.Date}`;
             document.querySelector('.main-post a').href = `/blog/${latestPost.PostID}`;
 
+            // --------------------
             // Featured Posts (Tech and Mushroom)
+            // --------------------
             const techPost = data.find(post => post.Category === 'Tech');
             const mushroomPost = data.find(post => post.Category === 'Mushroom');
 
-            if (techPost) {
-                document.querySelectorAll('.featured-post')[0].querySelector('img').src = techPost.FeaturedImageURL;
-                document.querySelectorAll('.featured-post')[0].querySelector('h3').innerHTML = `<a href="/blog/${techPost.PostID}">${techPost.Title}</a>`;
-                document.querySelectorAll('.featured-post')[0].querySelector('p').innerText = `by ${techPost.Author} | Published on ${techPost.Date}`;
-                document.querySelectorAll('.featured-post')[0].querySelector('a').href = `/blog/${techPost.PostID}`;
+            const featuredPostElements = document.querySelectorAll('.featured-post');
+
+            if (techPost && featuredPostElements[0]) {
+                featuredPostElements[0].querySelector('img').src = techPost.FeaturedImageURL;
+                featuredPostElements[0].querySelector('h3').innerHTML = `<a href="/blog/${techPost.PostID}">${techPost.Title}</a>`;
+                featuredPostElements[0].querySelector('p').innerText = `by ${techPost.Author} | Published on ${techPost.Date}`;
+                featuredPostElements[0].querySelector('a').href = `/blog/${techPost.PostID}`;
             }
 
-            if (mushroomPost) {
-                document.querySelectorAll('.featured-post')[1].querySelector('img').src = mushroomPost.FeaturedImageURL;
-                document.querySelectorAll('.featured-post')[1].querySelector('h3').innerHTML = `<a href="/blog/${mushroomPost.PostID}">${mushroomPost.Title}</a>`;
-                document.querySelectorAll('.featured-post')[1].querySelector('p').innerText = `by ${mushroomPost.Author} | Published on ${mushroomPost.Date}`;
-                document.querySelectorAll('.featured-post')[1].querySelector('a').href = `/blog/${mushroomPost.PostID}`;
+            if (mushroomPost && featuredPostElements[1]) {
+                featuredPostElements[1].querySelector('img').src = mushroomPost.FeaturedImageURL;
+                featuredPostElements[1].querySelector('h3').innerHTML = `<a href="/blog/${mushroomPost.PostID}">${mushroomPost.Title}</a>`;
+                featuredPostElements[1].querySelector('p').innerText = `by ${mushroomPost.Author} | Published on ${mushroomPost.Date}`;
+                featuredPostElements[1].querySelector('a').href = `/blog/${mushroomPost.PostID}`;
             }
 
+            // --------------------
             // Trending Posts (Index starts from 1 to 3)
-            for (let i = 1; i < 4; i++) {
-                const trendingPost = data[i];
-                if (trendingPost) {
-                    document.querySelectorAll('.trending-post img')[i - 1].src = trendingPost.FeaturedImageURL;
-                    document.querySelectorAll('.trending-post h4')[i - 1].innerHTML = `<a href="/blog/${trendingPost.PostID}">${trendingPost.Title}</a>`;
-                    document.querySelectorAll('.trending-post p')[i - 1].innerText = `by ${trendingPost.Author} | Published on ${trendingPost.Date}`;
-                    document.querySelectorAll('.trending-post a')[i - 1].href = `/blog/${trendingPost.PostID}`;
+            // --------------------
+            const trendingPostElements = document.querySelectorAll('.trending-post');
+            for (let i = 0; i < 3; i++) {
+                const trendingPost = data[i + 1]; // Shift index by 1 since trending posts start after the main post
+                if (trendingPost && trendingPostElements[i]) {
+                    trendingPostElements[i].querySelector('img').src = trendingPost.FeaturedImageURL;
+                    trendingPostElements[i].querySelector('h4').innerHTML = `<a href="/blog/${trendingPost.PostID}">${trendingPost.Title}</a>`;
+                    trendingPostElements[i].querySelector('p').innerText = `Published on ${trendingPost.Date}`;
+                    trendingPostElements[i].querySelector('a').href = `/blog/${trendingPost.PostID}`;
                 }
             }
 
+            // --------------------
             // Process All Posts to extract Tags for Categories Section
+            // --------------------
+            let mushroomTags = new Set();
+            let techTags = new Set();
+
             data.forEach(post => {
                 // Collect tags for the "Mushroom" category
                 if (post.Category === 'Mushroom' && post.Tags) {
@@ -259,7 +270,6 @@
             techTags.forEach(tag => {
                 techTagsContainer.innerHTML += `<li><a href="/tags/${tag}">${tag}</a></li>`;
             });
-
         } else {
             console.error('No posts found');
         }
@@ -269,6 +279,7 @@
 }
 
 loadBlogPosts();
+
 
 
 </script>
