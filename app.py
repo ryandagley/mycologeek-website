@@ -131,6 +131,25 @@ def fetch_post_metadata(slug):
     except Exception as e:
         print(f"Error fetching metadata from DynamoDB: {e}")
         return None
+    
+@app.route('/tags/<tag>')
+def tagged_posts(tag):
+    try:
+        # Scan the DynamoDB table for posts with the given tag
+        response = table.scan(
+            FilterExpression=boto3.dynamodb.conditions.Attr('Tags').contains(tag)
+        )
+        posts = response['Items']
+        
+        # Sort the posts by date (assuming 'Date' field is in a sortable format)
+        sorted_posts = sorted(posts, key=lambda x: x['Date'], reverse=True)
+
+        return render_template('tags.html', posts=sorted_posts, tag=tag)
+
+    except Exception as e:
+        print(f"Error fetching posts with tag {tag}: {e}")
+        return "Error loading posts", 500
+
 
 # Blog post route: fetch post from S3 and render it
 @app.route('/blog/<slug>')
