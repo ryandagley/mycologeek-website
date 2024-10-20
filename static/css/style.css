@@ -81,6 +81,12 @@ h2 {
   line-height: 1.5em; /* Adjust line height */
 }
 
+.post-content code {
+  white-space: pre-wrap;  /* Ensure this isn't set to nowrap */
+  font-family: monospace;
+  display: block;
+}
+
 /* Specific styles for links within blog posts */
 .post-content a {
   color: #3a7999; /* A bright color for visibility */
