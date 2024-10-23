@@ -13,6 +13,27 @@
             gtag('config', 'G-LZZSLDQ0M5');
         </script>
         
+        <style>
+            #back-to-top {
+              position: fixed;
+              bottom: 20px;
+              right: 20px;
+              z-index: 100;
+              display: none;
+              font-size: 16px;
+              padding: 10px;
+              background-color: #555;
+              color: white;
+              text-align: center;
+              border-radius: 5px;
+              cursor: pointer;
+            }
+            
+            #back-to-top:hover {
+              background-color: #333;
+            }
+        </style>
+
         <title>{{ title }}</title>
 
         <meta charset="utf-8">
@@ -152,9 +173,20 @@
    <script src="/static/js/wow.js"></script>
     
    <script>
+    window.onscroll = function() {
+      var button = document.getElementById("back-to-top");
+      if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
+        button.style.display = "block";
+      } else {
+        button.style.display = "none";
+      }
+    };
+    </script>
+
+   <script>
    new WOW().init();
    </script>
 
-
+<a id="back-to-top" href="#top">Back to Top</a>
 </body>
 </html>
